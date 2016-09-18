@@ -1,0 +1,8 @@
+#cat(grep("^(Date|1/2/2007|2/2/2007)", readLines("household_power_consumption.txt"), value = TRUE), sep = "\n", file = "household_power_consumption_subset.txt")
+hpc <- read.csv("household_power_consumption_subset.txt", sep=";", na.strings="?")
+hpc$datetime <- strptime(paste(hpc$Date,hpc$Time), format="%d/%m/%Y %H:%M:%S")
+hpc$Date <- as.Date(hpc$Date, format="%d/%m/%Y ")
+png(filename="plot2.png", width=480, height=480)
+par(mfrow=c(1,1))
+with(hpc,{plot(datetime, Global_active_power,type = "l",xlab="", ylab = "Global Active Power (kilowatts)")}) 
+dev.off()
